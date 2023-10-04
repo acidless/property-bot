@@ -8,7 +8,7 @@ export default class StartCommand {
         const options = {
             reply_markup: JSON.stringify({
                 keyboard: [
-                    [{text: '1 комната'}, {text: '2 комнаты'}, {text: '3 комнаты'}, {text: '4 комнаты'}],
+                    [{text: '1 комната'}, {text: '2 комнаты'}, {text: '3 комнаты'}, {text: 'Другое кол-во комнат'}],
                 ]
             })
         };

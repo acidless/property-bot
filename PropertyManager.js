@@ -16,11 +16,11 @@ export default class PropertyManager {
         return PropertyManager._instance;
     }
 
-    async getProperty(roomsCount) {
+    async getProperty(roomsCountArray) {
         this.data = [];
         this.currendIdx = 0;
         for (let p of this.parsers) {
-            const parserData = await p.getData([roomsCount]);
+            const parserData = await p.getData(roomsCountArray);
             this.data.push(...parserData)
         }
     }
