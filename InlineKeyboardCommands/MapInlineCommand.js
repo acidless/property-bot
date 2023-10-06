@@ -6,8 +6,8 @@ export default class MapInlineCommand {
     }
 
     async execute(query) {
-        const id = +query.data.slice(3);
-        const prop = PropertyManager.instance().data.find(p => p.id === id);
+        const id = query.data.slice(3);
+        const prop = PropertyManager.instance().data.find(p => p.id == id);
         Bot.bot.sendLocation(query.message.chat.id, prop.coordinates.lat, prop.coordinates.lng);
     }
 

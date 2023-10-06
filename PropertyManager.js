@@ -1,12 +1,15 @@
 import Bot from "./Bot.js";
 import CianParser from "./Parsers/Cian.js";
+import EtagiParser from "./Parsers/Etagi.js";
+import M2Parser from "./Parsers/M2.js";
+import {shuffleArray} from "./utils.js";
 
 export default class PropertyManager {
     static _instance;
 
     data = [];
     currendIdx = 0;
-    parsers = [new CianParser()];
+    parsers = [new EtagiParser(), new CianParser(), new M2Parser()];
 
     static instance() {
         if (!PropertyManager._instance) {
@@ -23,6 +26,8 @@ export default class PropertyManager {
             const parserData = await p.getData(roomsCountArray);
             this.data.push(...parserData)
         }
+
+        shuffleArray(this.data);
     }
 
     async sendProperty(chatId) {
@@ -39,7 +44,7 @@ export default class PropertyManager {
         <a href="${prop.url}">
             <b>${prop.title}</b>
         </a>
-💵 ${prop.price.toLocaleString()}₽\n
+💵 ${prop.price.toLocaleString()} ₽\n
 📍 ${prop.address}\n
 ${prop.description}`;
 

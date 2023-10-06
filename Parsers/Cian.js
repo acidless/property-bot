@@ -23,7 +23,7 @@ class CianParser {
             const offerParsed = {
                 url: offer.fullUrl,
                 id: offer.id,
-                arrea: offer.totalArea,
+                area: offer.totalArea,
                 roomsCount: offer.roomsCount,
                 photos: offer.photos.map(p => p.fullUrl),
                 floor: offer.floorNumber,
@@ -33,7 +33,7 @@ class CianParser {
                 title: offer.title,
                 price: offer.bargainTerms.price,
             }
-            offerParsed.title = `${offerParsed.roomsCount}-комн. кв., ${offerParsed.arrea} м², ${offerParsed.floor} этаж`
+            offerParsed.title = `${offerParsed.roomsCount}-комн. кв., ${offerParsed.area} м², ${offerParsed.floor} этаж`
             data.push(offerParsed);
         }
 

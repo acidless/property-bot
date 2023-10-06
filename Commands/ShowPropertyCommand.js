@@ -14,7 +14,7 @@ export default class ShowPropertyCommand {
         } else {
             if (this.isActive) {
                 this.isActive = false;
-                roomsCount = msg.text.split(",").map(s => this.parseRoomsCount(s)).flat(2);
+                roomsCount = msg.text.split(",").map(s => this.parseRoomsCount(s)).flat(2).filter(s => s >= 1 && s <= 6);
             } else {
                 this.isActive = true;
                 Bot.bot.sendMessage(msg.chat.id, "Введите кол-во комнат через запятую, так же можно использовать диапазон. Например, 1-4");
