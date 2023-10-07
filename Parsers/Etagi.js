@@ -4,13 +4,13 @@ class EtagiParser {
     constructor() {
     }
 
-    async getData(roomsCount) {
+    async getData(roomsCount, page) {
         let queryStr = ""
         roomsCount.forEach(r => {
             queryStr += `rooms[]=${r}&`
         })
 
-        const res = await fetch(`https://etagi.com/realty/?type[]=flat&${queryStr}`);
+        const res = await fetch(`https://etagi.com/realty/?type[]=flat&page=${page}&${queryStr}`);
         const html = await res.text();
 
         let js = html.slice(html.indexOf("var data="), html.indexOf('etagi.com"}}}') + 13);

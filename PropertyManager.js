@@ -9,6 +9,8 @@ export default class PropertyManager {
 
     data = [];
     currendIdx = 0;
+    currentPage = 2;
+    currentRoomsCount = [];
     parsers = [new EtagiParser(), new CianParser(), new M2Parser()];
 
     static instance() {
@@ -21,9 +23,10 @@ export default class PropertyManager {
 
     async getProperty(roomsCountArray) {
         this.data = [];
+        this.currentRoomsCount = roomsCountArray;
         this.currendIdx = 0;
         for (let p of this.parsers) {
-            const parserData = await p.getData(roomsCountArray);
+            const parserData = await p.getData(roomsCountArray, this.currentPage);
             this.data.push(...parserData)
         }
 
@@ -35,7 +38,8 @@ export default class PropertyManager {
         const prop = this.data[this.currendIdx++];
 
         if (!prop) {
-            bot.sendMessage(chatId, "Объекты недвижимости закончились");
+            this.currentPage++;
+            this.getProperty(this.currentRoomsCount);
             return;
         }
 

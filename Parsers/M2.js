@@ -5,7 +5,7 @@ class M2Parser {
     constructor() {
     }
 
-    async getData(roomsCount) {
+    async getData(roomsCount, page) {
         let queryStr = ""
         roomsCount.forEach(r => {
             if (r >= 5) {
@@ -15,7 +15,7 @@ class M2Parser {
             }
         });
 
-        const res = await fetch(`https://m2.ru/nedvizhimost/kupit-kvartiru/?${queryStr}`);
+        const res = await fetch(`https://m2.ru/nedvizhimost/kupit-kvartiru/?pageNumber=${page}&${queryStr}`);
         const html = await res.text();
         const doc = parse(html);
         const totalData = JSON.parse(doc.getElementById('vtbeco-search-initial-state').textContent);

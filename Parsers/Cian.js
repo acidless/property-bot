@@ -4,13 +4,13 @@ class CianParser {
     constructor() {
     }
 
-    async getData(roomsCount) {
+    async getData(roomsCount, page) {
         let queryStr = ""
         roomsCount.forEach(r => {
             queryStr += `room${r}=1&`
         })
 
-        const res = await fetch(`https://www.cian.ru/cat.php?deal_type=sale&engine_version=2&offer_type=flat&${queryStr}`);
+        const res = await fetch(`https://www.cian.ru/cat.php?deal_type=sale&engine_version=2&offer_type=flat&p=${page}&${queryStr}`);
         const html = await res.text();
 
         const js = html.slice(html.indexOf("window._cianConfig['frontend-serp']"), html.indexOf("var d = w.document;") - 54);
