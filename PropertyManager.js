@@ -11,7 +11,7 @@ export default class PropertyManager {
     currendIdx = 0;
     currentPage = 2;
     currentRoomsCount = [];
-    parsers = [new EtagiParser(), new CianParser(), new M2Parser()];
+    parsers = [new M2Parser(), new CianParser(), new EtagiParser()];
 
     static instance() {
         if (!PropertyManager._instance) {
@@ -21,21 +21,29 @@ export default class PropertyManager {
         return PropertyManager._instance;
     }
 
-    async getProperty(roomsCountArray) {
+    async getProperty(roomsCountArray, onFirstPropLoaded = () => {
+    }) {
         this.data = [];
         this.currentRoomsCount = roomsCountArray;
         this.currendIdx = 0;
+        let isCallbackCalled = false;
         for (let p of this.parsers) {
             const parserData = await p.getData(roomsCountArray, this.currentPage);
+            if (!isCallbackCalled) {
+                onFirstPropLoaded(parserData[0]);
+                isCallbackCalled = true;
+            }
             this.data.push(...parserData)
         }
 
         shuffleArray(this.data);
     }
 
-    async sendProperty(chatId) {
+    async sendProperty(chatId, prop = null) {
         const bot = Bot.bot;
-        const prop = this.data[this.currendIdx++];
+        if(!prop){
+            prop = this.data[this.currendIdx++];
+        }
 
         if (!prop) {
             this.currentPage++;

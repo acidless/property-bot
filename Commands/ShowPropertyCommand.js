@@ -22,8 +22,10 @@ export default class ShowPropertyCommand {
             }
         }
 
-        await PropertyManager.instance().getProperty(roomsCount);
-        PropertyManager.instance().sendProperty(msg.chat.id);
+        Bot.bot.sendMessage(msg.chat.id, "Получаю данные о недвижимости...");
+        await PropertyManager.instance().getProperty(roomsCount, (prop) => {
+            PropertyManager.instance().sendProperty(msg.chat.id, prop);
+        });
     }
 
     match(msg) {
